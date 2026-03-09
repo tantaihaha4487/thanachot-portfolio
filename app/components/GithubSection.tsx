@@ -14,16 +14,16 @@ interface Repo {
 }
 
 const langColors: Record<string, string> = {
-  TypeScript:  "#3178C6",
-  JavaScript:  "#F7DF1E",
-  Java:        "#B07219",
-  Go:          "#00ADD8",
-  Python:      "#3572A5",
-  Rust:        "#DEA584",
-  Kotlin:      "#A97BFF",
-  HTML:        "#E34C26",
-  CSS:         "#563D7C",
-  Shell:       "#89E051",
+  TypeScript: "#3178C6",
+  JavaScript: "#F7DF1E",
+  Java: "#B07219",
+  Go: "#00ADD8",
+  Python: "#3572A5",
+  Rust: "#DEA584",
+  Kotlin: "#A97BFF",
+  HTML: "#E34C26",
+  CSS: "#563D7C",
+  Shell: "#89E051",
 };
 
 async function getRepos(): Promise<Repo[]> {
@@ -131,16 +131,16 @@ export default async function GithubSection() {
         style={{ background: "radial-gradient(circle, rgba(244,114,182,0.25) 0%, transparent 70%)" }}
       />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-12">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-12">
         {/* Section header */}
         <div className="mb-14">
           <div className="flex items-center gap-3 mb-3">
             <span className="mono-label syn-comment">// section_03</span>
             <span className="w-12 h-px opacity-20" style={{ background: "#F472B6" }} />
           </div>
-          <div className="flex items-end justify-between gap-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 sm:gap-6">
             <h2
-              className="text-4xl lg:text-5xl font-bold"
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold"
               style={{ fontFamily: "var(--font-geist-sans)" }}
             >
               <span className="syn-keyword" style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.7em", marginRight: "0.4em" }}>//</span>

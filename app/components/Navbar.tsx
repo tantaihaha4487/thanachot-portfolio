@@ -4,10 +4,9 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const links = [
-  { label: "Home",     href: "#home" },
-  { label: "Mashiro",  href: "#mashiro" },
+  { label: "Home", href: "#home" },
+  { label: "Mashiro", href: "#mashiro" },
   { label: "Projects", href: "#projects" },
-  { label: "Contact",  href: "#contact" },
 ];
 
 export default function Navbar() {
@@ -18,7 +17,7 @@ export default function Navbar() {
     const onScroll = () => {
       setScrolled(window.scrollY > 50);
 
-      const sections = ["home", "mashiro", "projects", "contact"];
+      const sections = ["home", "mashiro", "projects"];
       for (const id of sections) {
         const el = document.getElementById(id);
         if (el) {
@@ -42,7 +41,7 @@ export default function Navbar() {
   return (
     <div className="fixed top-4 left-0 right-0 z-50 flex justify-center pointer-events-none">
       <nav
-        className="pointer-events-auto relative px-6 py-3 rounded-full"
+        className="pointer-events-auto relative px-4 sm:px-6 py-2 sm:py-3 rounded-full"
         style={{
           background: scrolled
             ? "rgba(30, 33, 40, 0.88)"
@@ -60,7 +59,7 @@ export default function Navbar() {
             <button
               key={link.href}
               onClick={() => handleNav(link.href)}
-              className="relative px-4 py-1.5 text-sm rounded-full transition-colors"
+              className="relative px-3 sm:px-4 py-1.5 text-xs sm:text-sm rounded-full transition-colors"
               style={{
                 color: active === link.href.replace("#", "")
                   ? "#F472B6"

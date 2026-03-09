@@ -5,11 +5,11 @@ import { motion } from "framer-motion";
 import { animate, stagger } from "animejs";
 
 const socials = [
-  { label: "GitHub",    href: "https://github.com/tantaihaha4487" },
-  { label: "Modrinth",  href: "https://modrinth.com/user/tantaihaha4487" },
+  { label: "GitHub", href: "https://github.com/tantaihaha4487" },
+  { label: "Modrinth", href: "https://modrinth.com/user/tantaihaha4487" },
   { label: "Instagram", href: "https://www.instagram.com/txntai._exec/" },
-  { label: "Facebook",  href: "https://www.facebook.com/thanachot.phomthong" },
-  { label: "Discord",   href: "https://discord.gg/3R2vhgQqde" },
+  { label: "Facebook", href: "https://www.facebook.com/thanachot.phomthong" },
+  { label: "Discord", href: "https://discord.gg/3R2vhgQqde" },
 ];
 
 export default function Footer() {
@@ -41,7 +41,7 @@ export default function Footer() {
         style={{ background: "radial-gradient(ellipse, #F472B6 0%, transparent 70%)" }}
       />
 
-      <div className="relative z-10 max-w-4xl mx-auto px-6 lg:px-12 flex flex-col items-center gap-12 text-center">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-12 flex flex-col items-center gap-8 sm:gap-12 text-center">
 
         {/* Section label */}
         <motion.div
@@ -52,7 +52,7 @@ export default function Footer() {
           className="flex items-center gap-3"
         >
           <span className="w-8 h-px opacity-20" style={{ background: "#F472B6" }} />
-          <span className="mono-label syn-comment">// section_04 · contact</span>
+          <span className="mono-label syn-comment">// Footer</span>
           <span className="w-8 h-px opacity-20" style={{ background: "#F472B6" }} />
         </motion.div>
 
@@ -62,7 +62,7 @@ export default function Footer() {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: false }}
           transition={{ duration: 0.7, ease: "easeOut" }}
-          className="relative glass-pink rounded-2xl px-10 py-10 w-full max-w-2xl"
+          className="relative glass-pink rounded-2xl px-6 sm:px-10 py-8 sm:py-10 w-full max-w-2xl"
           style={{
             boxShadow: "0 4px 60px rgba(0,0,0,0.35), 0 0 0 0.5px rgba(244,114,182,0.1)",
           }}
@@ -82,7 +82,7 @@ export default function Footer() {
           {/* Animated quote */}
           <div ref={quoteRef}>
             <blockquote
-              className="text-2xl lg:text-3xl font-light leading-snug"
+              className="text-xl sm:text-2xl lg:text-3xl font-light leading-snug"
               style={{ color: "#E2E8F0", fontFamily: "var(--font-geist-sans)" }}
             >
               {`"Fake it until you make it."`
@@ -113,7 +113,7 @@ export default function Footer() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-4"
+          className="flex flex-wrap justify-center gap-3 sm:gap-4"
         >
           {socials.map((s) => (
             <a
@@ -150,13 +150,13 @@ export default function Footer() {
           className="flex flex-col items-center gap-2"
         >
           <div
-            className="mono-label"
+            className="mono-label text-xs sm:text-sm"
             style={{ color: "#6B7280" }}
           >
             Built with Next.js · Framer Motion · Tailwind
           </div>
           <div
-            className="mono-label"
+            className="mono-label text-xs sm:text-sm"
             style={{ color: "#6B7280" }}
           >
             © {new Date().getFullYear()} Thanachot Phomthong · tantaihaha4487

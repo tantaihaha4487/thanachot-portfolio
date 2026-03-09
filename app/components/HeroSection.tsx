@@ -20,7 +20,7 @@ const socials = [
     href: "https://modrinth.com/user/tantaihaha4487",
     icon: (
       <svg className="w-6 h-6" viewBox="0 0 512 514" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M503.16 323.56C514.55 281.47 515.32 235.91 503.2 190.76C466.57 54.2299 326.04 -26.8001 189.33 9.77991C83.8101 38.0199 11.3899 128.07 0.689941 230.47H43.99C54.29 147.33 113.74 74.7298 199.75 51.7098C306.05 23.2598 415.13 80.6699 453.17 181.38L411.03 192.65C391.64 145.8 352.57 111.45 306.3 96.8198L298.56 140.66C335.09 154.13 364.72 184.5 375.56 224.91C391.36 283.8 361.94 344.14 308.56 369.17L320.09 412.16C390.25 383.21 432.4 310.3 422.43 235.14L464.41 223.91C468.91 252.62 467.35 281.16 460.55 308.07L503.16 323.56Z" fill="currentColor" />
+        <path d="M503.16 323.56C514.55 281.47 515.32 235.91 503.2 190.76C466.57 54.2299 326.04 -26.8001 189.33 9.77991C83.8101 38.0199 11.3899 128.07 0.689941 230.47H43.99C54.29 147.33 113.74 74.7298 199.75 51.7098C306.05 23.2598 415.13 80.6699 453.17 181.38L411.03 192.65C391.64 145.8 352.57 111.45 306.3 96.8198L298.56 140.66C335.09 154.13 364.72 184.5 375.56 224.91C391.36 283.8 361.94 344.14 308.56 369.17L320.09 412.16C390.25 383.21 432.4 310.3 422.43 235.14L464.41 223.91C468.91 252.62 467.35 281.16 460.55 308.07L503.16 323.56Z" fill="currentColor" />
         <path d="M321.99 504.22C185.27 540.8 44.7501 459.77 8.11011 323.24C3.84011 307.31 1.17 291.33 0 275.46H43.27C44.36 287.37 46.4699 299.35 49.6799 311.29C53.0399 323.8 57.45 335.75 62.79 347.07L101.38 323.92C98.1299 316.42 95.39 308.6 93.21 300.47C69.17 210.87 122.41 118.77 212.13 94.7601C229.13 90.2101 246.23 88.4401 262.93 89.1501L255.19 133C244.73 133.05 234.11 134.42 223.53 137.25C157.31 154.98 118.01 222.95 135.75 289.09C136.85 293.16 138.13 297.13 139.59 300.99L188.94 271.38L174.07 231.95L220.67 184.08L279.57 171.39L296.62 192.38L269.47 219.88L245.79 227.33L228.87 244.72L237.16 267.79C237.16 267.79 253.95 285.63 253.98 285.64L277.7 279.33L294.58 260.79L331.44 249.12L342.42 273.82L304.39 320.45L240.66 340.63L212.08 308.81L162.26 338.7C187.8 367.78 226.2 383.93 266.01 380.56L277.54 423.55C218.13 431.41 160.1 406.82 124.05 361.64L85.6399 384.68C136.25 451.17 223.84 484.11 309.61 461.16C371.35 444.64 419.4 402.56 445.42 349.38L488.06 364.88C457.17 431.16 398.22 483.82 321.99 504.22Z" fill="currentColor" />
       </svg>
     ),
@@ -113,13 +113,13 @@ export default function HeroSection() {
         />
       </div>
 
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 lg:px-12 py-24">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-12">
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-12 py-16 sm:py-24">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16">
 
           {/* ── LEFT: Text + Socials ── */}
           <motion.div
             style={{ y: yText, opacity }}
-            className="flex-1 flex flex-col items-start gap-6"
+            className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left gap-6"
           >
             {/* Mono label */}
             <motion.div
@@ -136,7 +136,7 @@ export default function HeroSection() {
             {/* Name */}
             <h1
               ref={nameRef}
-              className="text-5xl lg:text-7xl font-bold leading-tight tracking-tight"
+              className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight tracking-tight"
               style={{ fontFamily: "var(--font-geist-sans)" }}
             >
               <div>{firstName}</div>
@@ -148,7 +148,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.9 }}
-              className="flex flex-col gap-1"
+              className="flex flex-col items-center lg:items-start gap-1"
             >
               <span
                 className="text-lg font-light tracking-wide"
@@ -166,7 +166,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.1 }}
-              className="flex gap-4 mt-2"
+              className="flex flex-wrap justify-center lg:justify-start gap-4 mt-2"
             >
               <button
                 onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
@@ -199,7 +199,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.3 }}
-              className="flex flex-row flex-wrap justify-center gap-3 mt-2"
+              className="flex flex-row flex-wrap justify-center lg:justify-start gap-3 mt-2"
             >
               {socials.map((s) => (
                 <a
@@ -233,7 +233,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="flex-shrink-0 relative w-64 h-64 lg:w-80 lg:h-80"
+            className="flex-shrink-0 relative w-56 h-56 sm:w-64 sm:h-64 lg:w-80 lg:h-80 mt-8 lg:mt-0"
           >
             {/* Outer wireframe ring */}
             <div
@@ -251,7 +251,7 @@ export default function HeroSection() {
 
             {/* Avatar container */}
             <div
-              className="relative w-64 h-64 lg:w-80 lg:h-80 rounded-2xl overflow-hidden"
+              className="relative w-56 h-56 sm:w-64 sm:h-64 lg:w-80 lg:h-80 rounded-2xl overflow-hidden"
               style={{
                 background: "rgba(30,34,42,0.9)",
                 border: "1px solid rgba(244,114,182,0.25)",
