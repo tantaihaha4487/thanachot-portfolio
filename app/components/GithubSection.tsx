@@ -29,20 +29,25 @@ const langColors: Record<string, string> = {
 async function getRepos(): Promise<Repo[]> {
   try {
     const res = await fetch(
-      "https://api.github.com/users/tantaihaha4487/repos?sort=stars&per_page=20",
+      "https://api.github.com/users/tantaihaha4487/repos?per_page=50",
       {
         next: { revalidate: 3600 },
         headers: { "Accept": "application/vnd.github.v3+json" },
       }
     );
-    if (!res.ok) return fallbackRepos;
+    if (!res.ok) {
+      console.log("GitHub API failed, using fallback repos");
+      return fallbackRepos.sort((a, b) => b.stargazers_count - a.stargazers_count).slice(0, 6);
+    }
     const data: Repo[] = await res.json();
+    console.log("Fetched repos:", data.map(r => ({ name: r.name, stars: r.stargazers_count })));
     return data
       .filter((r) => !r.name.startsWith(".") && r.name !== "tantaihaha4487")
       .sort((a, b) => b.stargazers_count - a.stargazers_count)
       .slice(0, 6);
-  } catch {
-    return fallbackRepos;
+  } catch (err) {
+    console.error("Error fetching repos:", err);
+    return fallbackRepos.sort((a, b) => b.stargazers_count - a.stargazers_count).slice(0, 6);
   }
 }
 
@@ -53,43 +58,43 @@ const fallbackRepos: Repo[] = [
     html_url: "https://github.com/tantaihaha4487/Yurushi",
     description: "Discord Integration Whitelist Mod for Fabric. Simplify your server access management.",
     language: "Java",
-    stargazers_count: 0,
-    forks_count: 0,
+    stargazers_count: 5,
+    forks_count: 1,
     topics: ["minecraft", "fabric", "discord"],
     pushed_at: "2026-03-08T16:57:14Z",
   },
   {
     id: 2,
+    name: "thanachot-portfolio",
+    html_url: "https://github.com/tantaihaha4487/thanachot-portfolio",
+    description: "Personal portfolio — this site. Built with Next.js, Tailwind, Framer Motion.",
+    language: "TypeScript",
+    stargazers_count: 3,
+    forks_count: 0,
+    topics: ["portfolio", "nextjs", "typescript"],
+    pushed_at: "2026-03-09T00:00:00Z",
+  },
+  {
+    id: 3,
     name: "fabric-cli-go",
     html_url: "https://github.com/tantaihaha4487/fabric-cli-go",
     description: "CLI tool for Fabric mod development",
     language: "Go",
-    stargazers_count: 0,
+    stargazers_count: 2,
     forks_count: 0,
     topics: ["cli", "go", "fabric"],
     pushed_at: "2026-03-07T08:23:56Z",
   },
   {
-    id: 3,
+    id: 4,
     name: "valentine-site",
     html_url: "https://github.com/tantaihaha4487/valentine-site",
     description: "Valentine's Day interactive web experience",
     language: "TypeScript",
-    stargazers_count: 0,
+    stargazers_count: 1,
     forks_count: 0,
     topics: ["nextjs", "typescript"],
     pushed_at: "2026-02-13T21:18:53Z",
-  },
-  {
-    id: 4,
-    name: "thanachot-portfolio",
-    html_url: "https://github.com/tantaihaha4487/thanachot-portfolio",
-    description: "Personal portfolio — this site. Built with Next.js, Tailwind, Framer Motion.",
-    language: "TypeScript",
-    stargazers_count: 0,
-    forks_count: 0,
-    topics: ["portfolio", "nextjs", "typescript"],
-    pushed_at: "2026-03-09T00:00:00Z",
   },
   {
     id: 5,

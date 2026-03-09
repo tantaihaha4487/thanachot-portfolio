@@ -102,7 +102,12 @@ export default function MashiroSection() {
 
               {/* Character name badge */}
               <div
-                className="absolute bottom-6 left-1/2 -translate-x-1/2 glass-pink rounded-full px-5 py-2 z-20"
+                className="absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full px-5 py-2 z-20"
+                style={{
+                  background: "rgba(30, 34, 42, 0.95)",
+                  border: "1px solid rgba(244,114,182,0.3)",
+                  boxShadow: "0 4px 20px rgba(0,0,0,0.4)",
+                }}
               >
                 <span
                   className="mono-label"
