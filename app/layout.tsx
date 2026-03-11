@@ -32,12 +32,12 @@ export const metadata: Metadata = {
     { name: "Thanachot Phomthong", url: "https://github.com/tantaihaha4487" },
   ],
   creator: "Thanachot Phomthong",
-  metadataBase: new URL("https://tantaihaha4487.vercel.app"),
+  metadataBase: new URL("https://thanachot-murex.vercel.app/"),
   openGraph: {
     title: "Thanachot Phomthong | tantaihaha4487",
     description:
       "Portfolio of Thanachot Phomthong — developer, creator, and builder.",
-    url: "https://tantaihaha4487.vercel.app",
+    url: "https://thanachot-murex.vercel.app/",
     siteName: "Thanachot Phomthong",
     locale: "en_US",
     type: "website",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true },
   },
   alternates: {
-    canonical: "https://tantaihaha4487.vercel.app",
+    canonical: "https://thanachot-murex.vercel.app/",
   },
 };
 
