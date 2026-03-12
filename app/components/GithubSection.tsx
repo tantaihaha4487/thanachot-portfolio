@@ -40,7 +40,7 @@ async function getRepos(): Promise<Repo[]> {
       return fallbackRepos.sort((a, b) => b.stargazers_count - a.stargazers_count).slice(0, 6);
     }
     const data: Repo[] = await res.json();
-    console.log("Fetched repos:", data.map(r => ({ name: r.name, stars: r.stargazers_count })));
+    // console.log("Fetched repos:", data.map(r => ({ name: r.name, stars: r.stargazers_count })));
     return data
       .filter((r) => !r.name.startsWith(".") && r.name !== "tantaihaha4487")
       .sort((a, b) => b.stargazers_count - a.stargazers_count)
