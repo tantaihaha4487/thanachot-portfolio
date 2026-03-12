@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
 import MashiroSection from "./components/MashiroSection";
 import GithubSection from "./components/GithubSection";
+import ModrinthSection from "./components/ModrinthSection";
 import Footer from "./components/Footer";
 import SectionDivider from "./components/SectionDivider";
 import ScrollProgress from "./components/ScrollProgress";
@@ -49,6 +50,10 @@ export default function Home() {
       <SectionDivider label="03 · github projects" />
       <Suspense fallback={<GithubSkeleton />}>
         <GithubSection />
+      </Suspense>
+      <SectionDivider label="04 · minecraft mods" />
+      <Suspense fallback={<GithubSkeleton />}>
+        <ModrinthSection />
       </Suspense>
       <Footer />
     </main>
