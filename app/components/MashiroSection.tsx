@@ -112,7 +112,7 @@ export default function MashiroSection() {
                   className="mono-label"
                   style={{ color: "#C084FC", letterSpacing: "0.09em" }}
                 >
-                  天明白 · Mashiro
+                  まっしろ · Mashiro
                 </span>
               </div>
             </div>
@@ -148,7 +148,7 @@ export default function MashiroSection() {
                     Mashiro is an ambitious project aiming to create the{" "}
                     <span style={{ color: "#C084FC" }}>first Thai AI VTuber</span>{" "}
                     capable of real-time viewer interaction. Designed as a 1000-year-old
-                    cat god (猫神), she embodies a playful, slightly mischievous, yet friendly persona.
+                    cat god (まっしろ), she embodies a playful, slightly mischievous, yet friendly persona.
                   </p>
                   <p
                     className="text-sm leading-relaxed"

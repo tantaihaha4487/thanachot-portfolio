@@ -156,7 +156,7 @@ export default function HeroSection() {
               >
                 Developer · Creator · Builder
               </span>
-              <span className="text-base" style={{ color: "#94A3B8", fontFamily: "var(--font-geist-sans)" }}>
+              <span className="text-base" style={{ color: "#94A3B8", fontFamily: "var(--font-kanit)" }}>
                 ธนโชติ พรมทอง
               </span>
             </motion.div>
