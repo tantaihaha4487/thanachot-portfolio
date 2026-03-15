@@ -110,7 +110,7 @@ export default function MashiroSection() {
               >
                 <span
                   className="mono-label"
-                  style={{ color: "#C084FC", letterSpacing: "0.09em" }}
+                  style={{ color: "#C084FC", letterSpacing: "0.06em" }}
                 >
                   まっしろ · Mashiro
                 </span>
