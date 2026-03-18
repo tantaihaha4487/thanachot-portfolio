@@ -153,12 +153,6 @@ export default function Footer() {
             className="mono-label text-xs sm:text-sm"
             style={{ color: "#6B7280" }}
           >
-            Built with Next.js · Framer Motion · Tailwind
-          </div>
-          <div
-            className="mono-label text-xs sm:text-sm"
-            style={{ color: "#6B7280" }}
-          >
             © {new Date().getFullYear()} Thanachot Phomthong · tantaihaha4487
           </div>
         </motion.div>
