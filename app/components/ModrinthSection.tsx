@@ -29,18 +29,18 @@ async function getModrinthProjects(): Promise<Project[]> {
         },
       }
     );
-    
+
     if (!res.ok) {
       console.log("Modrinth API failed, using fallback projects");
       return fallbackProjects.sort((a, b) => b.downloads - a.downloads);
     }
-    
+
     const data: Project[] = await res.json();
-    console.log("Fetched Modrinth projects:", data.map(p => ({ 
-      name: p.title, 
-      downloads: p.downloads 
+    console.log("Fetched Modrinth projects:", data.map(p => ({
+      name: p.title,
+      downloads: p.downloads
     })));
-    
+
     return data.sort((a, b) => b.downloads - a.downloads);
   } catch (err) {
     console.error("Error fetching Modrinth projects:", err);
@@ -68,6 +68,7 @@ const fallbackProjects: Project[] = [
 
 export default async function ModrinthSection() {
   const projects = await getModrinthProjects();
+  const totalDownloads = projects.reduce((sum, project) => sum + project.downloads, 0);
 
   return (
     <section id="mods" className="relative section-pad overflow-hidden">
@@ -110,7 +111,17 @@ export default async function ModrinthSection() {
 
         <ModrinthCards projects={projects} />
 
-        <div className="mt-12 flex justify-center">
+        <div className="mt-12 flex flex-col items-center justify-center gap-6">
+          <div className="flex flex-col items-center gap-2">
+            <span className="text-sm text-[#8892A4] uppercase tracking-wider font-semibold" style={{ fontFamily: "var(--font-geist-mono)" }}>
+              Total Profile Downloads
+            </span>
+            <div className="flex items-center gap-2 text-3xl font-bold" style={{ color: "#60A5FA", fontFamily: "var(--font-geist-mono)" }}>
+              <Download size={24} />
+              <span>{totalDownloads.toLocaleString()}</span>
+            </div>
+          </div>
+
           <a
             href="https://modrinth.com/user/tantaihaha4487"
             target="_blank"
