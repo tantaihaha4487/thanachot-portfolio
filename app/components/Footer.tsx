@@ -6,6 +6,7 @@ import { animate, stagger } from "animejs";
 
 const socials = [
   { label: "GitHub", href: "https://github.com/tantaihaha4487" },
+  { label: "X", href: "https://x.com/TantaiHaha" },
   { label: "Modrinth", href: "https://modrinth.com/user/tantaihaha4487" },
   { label: "Instagram", href: "https://www.instagram.com/txntai._exec/" },
   { label: "Facebook", href: "https://www.facebook.com/thanachot.phomthong" },

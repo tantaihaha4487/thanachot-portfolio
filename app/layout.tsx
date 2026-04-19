@@ -22,6 +22,7 @@ const BASE_URL = "https://thanachot.xyz";
 
 const socialLinks = [
   { name: "GitHub", url: "https://github.com/tantaihaha4487" },
+  { name: "X", url: "https://x.com/TantaiHaha" },
   { name: "Modrinth", url: "https://modrinth.com/user/tantaihaha4487" },
   { name: "Instagram", url: "https://www.instagram.com/txntai._exec/" },
   { name: "Facebook", url: "https://www.facebook.com/thanachot.phomthong" },

@@ -19,6 +19,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     },
     {
+      url: "https://x.com/TantaiHaha",
+      lastModified: now,
+      changeFrequency: "daily",
+      priority: 0.6,
+    },
+    {
       url: "https://modrinth.com/user/tantaihaha4487",
       lastModified: now,
       changeFrequency: "daily",
