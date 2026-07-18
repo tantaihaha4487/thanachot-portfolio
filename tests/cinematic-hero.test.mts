@@ -23,7 +23,7 @@ test("navbar remains usable if the hero is missing", () => {
 test("hero source retains the responsive and navigation contract", async () => {
   const source = await readFile("app/components/HeroSection.tsx", "utf8");
   assert.match(source, /data-cinematic-hero/);
-  assert.match(source, /hidden h-\[175dvh\] lg:block/);
+  assert.match(source, /hidden h-dvh lg:block/);
   assert.match(source, /href: "#mashiro"/);
   assert.match(source, /href: "#projects"/);
   assert.match(source, /href: "#mods"/);
@@ -51,8 +51,10 @@ test("reduced motion has a CSS fallback for final hero content", async () => {
 });
 
 test("hero layers the supplied portrait cutout above a blurred background", async () => {
+  await access("public/hero-background.png");
   await access("public/AVARTAR_object.png");
   const source = await readFile("app/components/HeroSection.tsx", "utf8");
+  assert.match(source, /src="\/hero-background\.png"/);
   assert.match(source, /src="\/AVARTAR_object\.png"/);
   assert.match(source, /cinematic-portrait/);
   assert.match(source, /blur-\[10px\]/);

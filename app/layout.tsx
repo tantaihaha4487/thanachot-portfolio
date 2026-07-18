@@ -1,22 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Kanit } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const kanit = Kanit({
-  variable: "--font-kanit",
-  weight: "200",
-  subsets: ["latin", "thai"],
-});
 
 const BASE_URL = "https://thanachot.xyz";
 
@@ -80,11 +63,11 @@ export const metadata: Metadata = {
       "Portfolio of Thanachot Phomthong — developer, creator, and builder. Minecraft mod author on Modrinth, open-source contributor on GitHub.",
     images: [
       {
-        url: `${BASE_URL}/AVATAR.jpg`,
+        url: `${BASE_URL}/hero-background.png`,
         width: 1200,
         height: 630,
         alt: "Thanachot Phomthong — Developer & Builder",
-        type: "image/jpeg",
+        type: "image/png",
       },
     ],
   },
@@ -95,7 +78,7 @@ export const metadata: Metadata = {
     title: "Thanachot Phomthong | tantaihaha4487",
     description:
       "Portfolio of Thanachot Phomthong — developer, creator, and builder. Minecraft mod author on Modrinth, open-source contributor on GitHub.",
-    images: [`${BASE_URL}/AVATAR.jpg`],
+    images: [`${BASE_URL}/hero-background.png`],
   },
   alternates: {
     canonical: BASE_URL,
@@ -110,8 +93,8 @@ export const metadata: Metadata = {
     "geo.region": "TH",
     "geo.placename": "Bangkok, Thailand",
     "ICBM": "13.7563, 100.5018",
-    "theme-color": "#282C33",
-    "color-scheme": "dark",
+    "theme-color": "#ffffff",
+    "color-scheme": "light",
   },
 };
 
@@ -129,7 +112,7 @@ export default function RootLayout({
     url: BASE_URL,
     jobTitle: "Developer",
     description: "Portfolio of Thanachot Phomthong — developer, creator, and builder. Minecraft mod author on Modrinth, open-source contributor on GitHub.",
-    image: `${BASE_URL}/AVATAR.jpg`,
+    image: `${BASE_URL}/hero-background.png`,
     sameAs: socialLinks.map((s) => s.url),
     knowsAbout: [
       "Web Development",
@@ -166,7 +149,7 @@ export default function RootLayout({
     "@id": `${BASE_URL}/#organization`,
     name: "Thanachot Phomthong Portfolio",
     url: BASE_URL,
-    logo: `${BASE_URL}/AVATAR.jpg`,
+    logo: `${BASE_URL}/hero-background.png`,
     sameAs: socialLinks.map((s) => s.url),
     contactPoint: {
       "@type": "ContactPoint",
@@ -180,7 +163,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${kanit.variable} antialiased`}
+        className="antialiased"
       >
         <script
           type="application/ld+json"

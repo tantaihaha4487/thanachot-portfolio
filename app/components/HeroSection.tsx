@@ -133,7 +133,7 @@ export default function HeroSection() {
       id="home"
       ref={heroRef}
       data-cinematic-hero
-      className="relative hidden h-[175dvh] lg:block"
+      className="relative hidden h-dvh lg:block"
       onPointerMove={onPointerMove}
       onPointerLeave={resetPointer}
     >
@@ -147,8 +147,8 @@ export default function HeroSection() {
           }}
         >
           <Image
-            src="/AVATAR.jpg"
-            alt="Thanachot Phomthong seated outdoors"
+            src="/hero-background.png"
+            alt="White bench in front of a school building"
             fill
             priority
             sizes="100vw"
