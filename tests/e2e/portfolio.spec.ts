@@ -1,6 +1,8 @@
 import { expect, test } from "@playwright/test";
 
 const biographyLead = "I code, build, and experiment with things that interest me.";
+const linkedBiography =
+  "Most of my work lives around TypeScript, web development, Fabric modding, and open source. You can find my projects on GitHub and my mods on Modrinth.";
 
 test.describe("responsive portfolio", () => {
   for (const viewport of [
@@ -36,6 +38,7 @@ test.describe("responsive portfolio", () => {
     await expect(page.locator("[data-hero-sticky]")).toHaveCSS("position", "sticky");
     await expect(hero.locator("[data-project-link]")).toHaveCount(3);
     await expect(hero.locator("[data-social-link]")).toHaveCount(6);
+    await expect(hero).toHaveAttribute("data-enhanced", "true");
   });
 
   test("mobile omits the desktop hero and begins with the profile story", async ({ page }) => {
@@ -47,15 +50,43 @@ test.describe("responsive portfolio", () => {
     await expect(story).toBeVisible();
     await expect(story.locator("[data-story-copy] p").first()).toHaveText(biographyLead);
     await expect(page.locator("[data-profile-portrait]")).toBeVisible();
+    await expect(page.locator('footer [aria-label="Social profiles"] a')).toHaveCount(6);
   });
 
   test("all links are keyboard focusable with a visible focus treatment", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto("/");
-  const firstProject = page.locator("[data-desktop-hero] [data-project-link]").first();
+    const firstProject = page.locator("[data-desktop-hero] [data-project-link]").first();
     await firstProject.focus();
     await expect(firstProject).toBeFocused();
     expect(await firstProject.evaluate((node) => getComputedStyle(node).outlineStyle)).not.toBe("none");
+  });
+
+  test("the 1024px profile story stays inside the viewport", async ({ page }) => {
+    await page.setViewportSize({ width: 1024, height: 768 });
+    await page.goto("/");
+    const box = await page.locator("[data-story-copy]").boundingBox();
+    expect(box).not.toBeNull();
+    expect((box?.x ?? 0) + (box?.width ?? 0)).toBeLessThanOrEqual(1024);
+  });
+
+  test("the linked biography retains its approved visible spacing", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/");
+    await expect(page.locator("[data-story-copy] p").nth(3)).toHaveText(linkedBiography);
+  });
+
+  test("the sticky hero hands off to the editorial story", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/");
+    const sticky = page.locator("[data-hero-sticky]");
+    await page.evaluate(() => window.scrollTo(0, 500));
+    await expect(sticky).toBeInViewport();
+    expect((await sticky.boundingBox())?.y).toBe(0);
+
+    await page.evaluate(() => window.scrollTo(0, 1500));
+    expect((await sticky.boundingBox())?.y).toBeLessThan(0);
+    await expect(page.locator("[data-profile-story]")).toBeInViewport();
   });
 });
 
@@ -81,7 +112,7 @@ test("approved metadata and crawl outputs are rendered", async ({ page, request 
   expect(await (await request.get("/sitemap-0.xml")).text()).toContain(
     "<loc>https://thanachot.xyz/</loc>",
   );
-  await page.goto("/404/");
+  await page.goto("/404.html");
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex, nofollow");
 });
 
@@ -115,4 +146,19 @@ test("local portraits provide responsive modern formats and explicit dimensions"
   await expect(image).toHaveAttribute("height", "1200");
 
   await expect(page.locator("[data-hero-foreground] source")).toHaveCount(2);
+});
+
+test("the built page produces no browser console errors", async ({ page }) => {
+  const errors: string[] = [];
+  page.on("console", (message) => {
+    if (message.type() === "error") errors.push(message.text());
+  });
+  page.on("pageerror", (error) => errors.push(error.message));
+
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  await page.waitForTimeout(100);
+
+  expect(errors).toEqual([]);
 });
