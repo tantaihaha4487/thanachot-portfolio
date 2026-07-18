@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+import { shouldShowNavbar } from "./hero-visibility";
 
 const links = [
   { label: "Home", href: "#home" },
@@ -12,10 +13,26 @@ const links = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("home");
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    const media = window.matchMedia("(min-width: 1024px)");
+
+    const syncVisibility = () => {
+      const hero = document.querySelector<HTMLElement>(
+        "[data-cinematic-hero]",
+      );
+      setVisible(
+        shouldShowNavbar({
+          isDesktop: media.matches,
+          heroBottom: hero?.getBoundingClientRect().bottom ?? null,
+        }),
+      );
+    };
+
     const onScroll = () => {
       setScrolled(window.scrollY > 50);
+      syncVisibility();
 
       const sections = ["home", "mashiro", "projects"];
       for (const id of sections) {
@@ -29,8 +46,18 @@ export default function Navbar() {
         }
       }
     };
+
+    const frame = requestAnimationFrame(onScroll);
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", syncVisibility, { passive: true });
+    media.addEventListener("change", syncVisibility);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", syncVisibility);
+      media.removeEventListener("change", syncVisibility);
+    };
   }, []);
 
   const handleNav = (href: string) => {
@@ -39,10 +66,20 @@ export default function Navbar() {
   };
 
   return (
-    <div className="fixed top-4 left-0 right-0 z-50 flex justify-center pointer-events-none">
+    <div
+      aria-hidden={!visible}
+      className="cinematic-navbar fixed top-4 left-0 right-0 z-50 flex justify-center pointer-events-none"
+      style={{
+        opacity: visible ? 1 : 0,
+        visibility: visible ? "visible" : "hidden",
+        transition:
+          "opacity 500ms cubic-bezier(.16, 1, .3, 1), visibility 500ms",
+      }}
+    >
       <nav
         className="pointer-events-auto relative px-4 sm:px-6 py-2 sm:py-3 rounded-full"
         style={{
+          pointerEvents: visible ? "auto" : "none",
           background: scrolled
             ? "rgba(30, 33, 40, 0.88)"
             : "rgba(30, 33, 40, 0.65)",

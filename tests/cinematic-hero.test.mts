@@ -29,3 +29,10 @@ test("hero source retains the responsive and navigation contract", async () => {
   assert.match(source, /href: "#mods"/);
   assert.match(source, /useReducedMotion/);
 });
+
+test("navbar consumes the cinematic visibility contract", async () => {
+  const source = await readFile("app/components/Navbar.tsx", "utf8");
+  assert.match(source, /shouldShowNavbar/);
+  assert.match(source, /data-cinematic-hero/);
+  assert.match(source, /cinematic-navbar/);
+});
