@@ -35,12 +35,22 @@ describe("search metadata inputs", () => {
   it("publishes crawl controls and a host-conditioned www redirect", () => {
     const robots = readFileSync(resolve("public/robots.txt"), "utf8");
     const vercel = JSON.parse(readFileSync(resolve("vercel.json"), "utf8")) as {
+      framework: string;
+      buildCommand: string;
+      installCommand: string;
+      outputDirectory: string;
       redirects: unknown[];
     };
 
     expect(robots).toBe(
       "User-agent: *\nAllow: /\n\nSitemap: https://thanachot.xyz/sitemap-index.xml\n",
     );
+    expect(vercel).toMatchObject({
+      framework: "astro",
+      buildCommand: "npm run build",
+      installCommand: "npm ci",
+      outputDirectory: "dist",
+    });
     expect(vercel.redirects).toEqual([
       {
         source: "/:path*",
