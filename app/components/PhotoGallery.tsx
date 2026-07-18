@@ -10,7 +10,7 @@ const gallery = [
 const strip = [
   { src: "/images/IMG_3895.JPG", position: "center" },
   { src: "/images/_TGL3879.JPG", position: "center" },
-  { src: "/images/_TGL4583.jpg", position: "center" },
+  { src: "/images/IMG_9065.JPG", position: "center" },
 ];
 
 function GalleryImage({ src, position, className }: { src: string; position: string; className: string }) {
