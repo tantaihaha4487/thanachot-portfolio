@@ -26,6 +26,7 @@
     "@types/node": "24.10.13",
     "eslint": "10.0.2",
     "eslint-plugin-astro": "3.0.1",
+    "sharp": "0.34.5",
     "typescript": "5.9.3",
     "vitest": "4.1.10"
   },

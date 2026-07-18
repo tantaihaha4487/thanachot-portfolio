@@ -10,7 +10,7 @@ test.describe("responsive portfolio", () => {
     { width: 1440, height: 900 },
     { width: 1920, height: 1080 },
   ]) {
-    test(`${viewport.width}x${viewport.height} has no horizontal overflow`, async ({ page }) => {
+    test(`${viewport.width}x${viewport.height} has no horizontal overflow`, async ({ page }, testInfo) => {
       await page.setViewportSize(viewport);
       await page.goto("/");
       const overflow = await page.evaluate(
@@ -18,6 +18,11 @@ test.describe("responsive portfolio", () => {
       );
       expect(overflow).toBeLessThanOrEqual(1);
       await expect(page.locator("h1")).toHaveCount(1);
+      await page.screenshot({
+        path: testInfo.outputPath("page.png"),
+        fullPage: true,
+        animations: "disabled",
+      });
     });
   }
 
@@ -96,4 +101,18 @@ test("reduced motion keeps the static final composition", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator("[data-desktop-hero]")).not.toHaveAttribute("data-enhanced", "true");
   await expect(page.locator("[data-desktop-hero] [data-project-link]")).toHaveCount(3);
+});
+
+test("local portraits provide responsive modern formats and explicit dimensions", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+  const portrait = page.locator("[data-profile-portrait]");
+  await expect(portrait.locator('source[type="image/avif"]')).toHaveCount(1);
+  await expect(portrait.locator('source[type="image/webp"]')).toHaveCount(1);
+  const image = portrait.locator("img");
+  await expect(image).toHaveAttribute("alt", "Thanachot Phomthong seated outdoors");
+  await expect(image).toHaveAttribute("width", "1800");
+  await expect(image).toHaveAttribute("height", "1200");
+
+  await expect(page.locator("[data-hero-foreground] source")).toHaveCount(2);
 });

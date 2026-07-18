@@ -1,4 +1,7 @@
 ---
+import { Picture } from "astro:assets";
+
+import profilePortrait from "../assets/portfolio/profile-portrait.jpg";
 import type { PortfolioContent } from "../data/portfolio";
 
 interface Props {
@@ -24,7 +27,14 @@ const modrinth = "https://modrinth.com/user/tantaihaha4487";
 
   <div class="portrait-column">
     <figure data-profile-portrait>
-      <img src="/AVATAR.jpg" alt="Thanachot Phomthong standing outdoors" />
+      <Picture
+        src={profilePortrait}
+        formats={["avif", "webp"]}
+        widths={[600, 900, 1200, 1800]}
+        sizes="(max-width: 700px) calc(100vw - 2rem), (max-width: 1023px) 43vw, 26vw"
+        alt="Thanachot Phomthong seated outdoors"
+        loading="lazy"
+      />
     </figure>
     <p class="caption">Thailand · Developer and maker</p>
   </div>
@@ -92,7 +102,7 @@ const modrinth = "https://modrinth.com/user/tantaihaha4487";
     background: #dedbd4;
   }
 
-  figure img {
+  figure :global(img) {
     width: 100%;
     height: 100%;
     object-fit: cover;

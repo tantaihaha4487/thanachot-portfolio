@@ -15,6 +15,7 @@
 /.worktrees/
 /playwright-report/
 /test-results/
+/tmp/
 
 # next.js
 /.next/
