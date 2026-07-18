@@ -10,7 +10,8 @@
 
 ## Global Constraints
 
-- Use the existing `public/AVATAR.jpg`; do not add or generate imagery.
+- Use `public/AVATAR.jpg` as the blurred background and the user-supplied
+  `public/AVARTAR_object.png` as the sharp foreground; do not generate imagery.
 - Render the cinematic hero only at viewport widths of 1024px and above.
 - Hide navigation during the desktop hero and show it after the hero; keep it available below 1024px.
 - Preserve the Mashiro, GitHub, Modrinth, and footer sections and their order.
@@ -112,6 +113,7 @@ git commit -m "test: define cinematic hero visibility"
 **Files:**
 - Modify: `app/components/HeroSection.tsx`
 - Modify: `app/globals.css`
+- Add: `public/AVARTAR_object.png`
 - Test: `tests/cinematic-hero.test.ts`
 
 **Interfaces:**

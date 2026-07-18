@@ -258,6 +258,15 @@ body {
 
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
+  .cinematic-intro {
+    display: none !important;
+  }
+
+  .cinematic-content {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
   .tilt-card,
   .animate-pulse-ring,
   .glass-shimmer,

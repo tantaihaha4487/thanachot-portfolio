@@ -10,7 +10,8 @@ Modrinth, and footer sections below it.
 
 ## Scope
 
-- Use the existing `public/AVATAR.jpg` as the full-screen hero photograph.
+- Use `public/AVATAR.jpg` as a blurred full-screen background and the
+  user-supplied `public/AVARTAR_object.png` cutout as the sharp foreground.
 - Render the cinematic hero only at viewport widths of 1024px and above.
 - At smaller widths, omit the hero entirely and begin with the existing page
   content.
@@ -23,9 +24,10 @@ Modrinth, and footer sections below it.
 ## Desktop Experience
 
 The hero occupies a 175dvh scroll wrapper containing a 100dvh sticky scene.
-`AVATAR.jpg` fills the scene with responsive cover cropping. A restrained dark
-gradient protects text contrast without changing the photograph's bright,
-airy character.
+`AVATAR.jpg` fills the scene with responsive cover cropping and a Gaussian
+blur. `AVARTAR_object.png` sits above the intro and revealed text as the sharp
+foreground depth layer. A restrained dark gradient protects text contrast
+without changing the photograph's bright, airy character.
 
 The initial state presents a very large translucent `Thanachot` wordmark over
 the photograph. During the early portion of the scroll, the wordmark scales
@@ -45,9 +47,10 @@ type for the revealed name, translucent project cards, and minimal chrome.
 
 ### `HeroSection`
 
-Owns the sticky wrapper, image layers, intro wordmark, revealed identity panel,
-scroll progress transforms, pointer parallax, and reduced-motion behavior. It
-remains a client component because it reads pointer and scroll state.
+Owns the sticky wrapper, blurred background, sharp portrait cutout, intro
+wordmark, revealed identity panel, scroll transforms, pointer parallax, and
+reduced-motion behavior. It remains a client component because it reads
+pointer and scroll state.
 
 Project and social link data remain static module-level data. Internal project
 links smoothly scroll to the existing section IDs; external social links open
@@ -109,6 +112,6 @@ wide screens. Image cropping should prioritize Thanachot's face and upper body.
 ## Out of Scope
 
 - Redesigning the Mashiro, GitHub, Modrinth, or footer sections.
-- Adding new photographs or generating a foreground cutout.
+- Generating any additional image assets.
 - Recreating the reference site's biography or gallery sections.
 - Changing personal metadata, project content, or social destinations.

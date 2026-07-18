@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { readFile } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 
 import { shouldShowNavbar } from "../app/components/hero-visibility.ts";
 
@@ -28,6 +28,7 @@ test("hero source retains the responsive and navigation contract", async () => {
   assert.match(source, /href: "#projects"/);
   assert.match(source, /href: "#mods"/);
   assert.match(source, /useReducedMotion/);
+  assert.match(source, /const \{ scrollY \} = useScroll\(\);/);
 });
 
 test("navbar consumes the cinematic visibility contract", async () => {
@@ -35,4 +36,28 @@ test("navbar consumes the cinematic visibility contract", async () => {
   assert.match(source, /shouldShowNavbar/);
   assert.match(source, /data-cinematic-hero/);
   assert.match(source, /cinematic-navbar/);
+});
+
+test("reduced motion has a CSS fallback for final hero content", async () => {
+  const hero = await readFile("app/components/HeroSection.tsx", "utf8");
+  const styles = await readFile("app/globals.css", "utf8");
+  assert.match(hero, /cinematic-intro/);
+  assert.match(hero, /cinematic-content/);
+  assert.match(styles, /\.cinematic-intro\s*\{\s*display: none !important;/);
+  assert.match(
+    styles,
+    /\.cinematic-content\s*\{[\s\S]*?opacity: 1 !important;/,
+  );
+});
+
+test("hero layers the supplied portrait cutout above a blurred background", async () => {
+  await access("public/AVARTAR_object.png");
+  const source = await readFile("app/components/HeroSection.tsx", "utf8");
+  assert.match(source, /src="\/AVARTAR_object\.png"/);
+  assert.match(source, /cinematic-portrait/);
+  assert.match(source, /blur-\[10px\]/);
+  assert.match(
+    source,
+    /const portraitX = useTransform\(scrollY, \[0, 480\], \[0, 160\]\);/,
+  );
 });

@@ -87,32 +87,33 @@ export default function HeroSection() {
   const pointerY = useMotionValue(0);
   const smoothX = useSpring(pointerX, { stiffness: 70, damping: 20 });
   const smoothY = useSpring(pointerY, { stiffness: 70, damping: 20 });
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end end"],
-  });
+  const portraitPointerX = useTransform(smoothX, (value) => value * -0.35);
+  const portraitPointerY = useTransform(smoothY, (value) => value * -0.35);
+  const { scrollY } = useScroll();
 
   const introOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.18, 0.48],
+    scrollY,
+    [0, 120, 360],
     [1, 1, 0],
   );
-  const introScale = useTransform(scrollYProgress, [0, 0.48], [1, 2]);
+  const introScale = useTransform(scrollY, [0, 360], [1, 2]);
   const contentOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.32, 0.62],
+    scrollY,
+    [0, 180, 480],
     [0, 0, 1],
   );
   const contentScale = useTransform(
-    scrollYProgress,
-    [0.32, 0.62],
+    scrollY,
+    [180, 480],
     [0.88, 1],
   );
-  const contentX = useTransform(scrollYProgress, [0.32, 0.62], [-72, 0]);
-  const photoScale = useTransform(scrollYProgress, [0, 0.7], [1.1, 1.02]);
+  const contentX = useTransform(scrollY, [180, 480], [-72, 0]);
+  const photoScale = useTransform(scrollY, [0, 560], [1.1, 1.02]);
+  const portraitX = useTransform(scrollY, [0, 480], [0, 160]);
+  const portraitScale = useTransform(scrollY, [0, 480], [1, 1.02]);
   const shadeOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.62],
+    scrollY,
+    [0, 480],
     [0.14, 0.58],
   );
 
@@ -151,7 +152,7 @@ export default function HeroSection() {
             fill
             priority
             sizes="100vw"
-            className="object-cover object-[center_48%]"
+            className="object-cover object-[center_48%] blur-[10px]"
           />
         </motion.div>
 
@@ -165,7 +166,7 @@ export default function HeroSection() {
 
         <motion.p
           aria-hidden
-          className="absolute inset-0 flex items-center justify-center whitespace-nowrap text-[18vw] font-bold leading-none tracking-[-0.08em] text-white mix-blend-overlay"
+          className="cinematic-intro absolute inset-0 flex items-center justify-center whitespace-nowrap text-[18vw] font-bold leading-none tracking-[-0.08em] text-white mix-blend-overlay"
           style={{
             opacity: prefersReducedMotion ? 0 : introOpacity,
             scale: prefersReducedMotion ? 2 : introScale,
@@ -175,7 +176,33 @@ export default function HeroSection() {
         </motion.p>
 
         <motion.div
-          className="relative z-10 flex h-full max-w-7xl items-center px-12 xl:px-20"
+          aria-hidden
+          className="cinematic-portrait pointer-events-none absolute inset-0 z-20"
+          style={{
+            x: prefersReducedMotion ? 0 : portraitX,
+            scale: prefersReducedMotion ? 1 : portraitScale,
+          }}
+        >
+          <motion.div
+            className="absolute -inset-8"
+            style={{
+              x: prefersReducedMotion ? 0 : portraitPointerX,
+              y: prefersReducedMotion ? 0 : portraitPointerY,
+            }}
+          >
+            <Image
+              src="/AVARTAR_object.png"
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-[center_48%]"
+            />
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          className="cinematic-content relative z-10 flex h-full max-w-7xl items-center px-12 xl:px-20"
           style={{
             opacity: prefersReducedMotion ? 1 : contentOpacity,
             scale: prefersReducedMotion ? 1 : contentScale,
