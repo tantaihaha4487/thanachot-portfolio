@@ -45,3 +45,4 @@ bun.lock
 .windsurf
 skills-lock.json
 package-lock.json
+.worktrees/
