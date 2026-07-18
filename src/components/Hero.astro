@@ -72,7 +72,7 @@ const { identity, projects, socials } = Astro.props;
     object-fit: cover;
     object-position: 50% 44%;
     filter: saturate(0.66) contrast(0.92) brightness(1.08) blur(5px);
-    opacity: 0.52;
+    opacity: calc(0.52 - var(--hero-progress, 0) * 0.08);
     transform: translate3d(var(--hero-bg-x, 0), var(--hero-bg-y, 0), 0) scale(1.035);
   }
 
@@ -210,4 +210,23 @@ const { identity, projects, socials } = Astro.props;
       display: none;
     }
   }
+
+  .hero-stage[data-enhanced="true"] .hero-background,
+  .hero-stage[data-enhanced="true"] .portrait-window {
+    will-change: transform;
+  }
 </style>
+
+<script>
+  import { createHeroController } from "../scripts/hero-controller";
+
+  const root = document.querySelector<HTMLElement>("[data-desktop-hero]");
+  if (root) {
+    try {
+      const controller = createHeroController(root);
+      window.addEventListener("pagehide", () => controller.destroy(), { once: true });
+    } catch {
+      // The static composition is the complete fallback when enhancement is unavailable.
+    }
+  }
+</script>
