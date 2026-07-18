@@ -1,0 +1,89 @@
+:root {
+  --surface: #f8f6f0;
+  --paper: #fff;
+  --ink: #191a18;
+  --muted: #686b65;
+  --rule: #d7d4cc;
+  --accent-blue: #3f6592;
+  --accent-coral: #aa5d47;
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-serif: Iowan Old Style, Baskerville, "Times New Roman", ui-serif, Georgia, serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: var(--font-sans);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+}
+
+body {
+  min-width: 20rem;
+  margin: 0;
+  overflow-x: clip;
+  background: var(--paper);
+}
+
+img,
+picture {
+  display: block;
+  max-width: 100%;
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid #1c62cc;
+  outline-offset: 4px;
+}
+
+.section-shell {
+  width: min(100% - clamp(2rem, 7vw, 9rem), 112rem);
+  margin-inline: auto;
+}
+
+.mobile-work {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .mobile-work {
+    display: block;
+    padding-block: 1rem 5rem;
+  }
+
+  .mobile-work h2 {
+    margin: 0 0 2rem;
+    font-family: var(--font-serif);
+    font-size: clamp(2.4rem, 8vw, 5rem);
+    font-weight: 450;
+    letter-spacing: -0.05em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

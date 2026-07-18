@@ -1,0 +1,92 @@
+---
+import type { PortfolioContent } from "../data/portfolio";
+
+interface Props {
+  socials: PortfolioContent["socials"];
+  compact?: boolean;
+  testHooks?: boolean;
+}
+
+const { socials, compact = false, testHooks = false } = Astro.props;
+const marks: Record<string, string> = {
+  GitHub: "GH",
+  X: "X",
+  Modrinth: "M",
+  Instagram: "IG",
+  Facebook: "f",
+  Discord: "D",
+};
+---
+
+<ul class:list={["social-list", { compact }]} aria-label="Social profiles">
+  {
+    socials.map((social) => (
+      <li>
+        <a
+          href={social.href}
+          rel="me noopener noreferrer"
+          target="_blank"
+          data-social-link={testHooks ? "" : undefined}
+          aria-label={`${social.label} — opens in a new tab`}
+        >
+          <span class="social-mark" aria-hidden="true">{marks[social.label]}</span>
+          <span>{social.label}</span>
+        </a>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .social-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.55rem 0.72rem;
+    border: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+    border-radius: 999px;
+    color: inherit;
+    font-size: 0.72rem;
+    font-weight: 650;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease;
+  }
+
+  a:hover {
+    border-color: currentColor;
+    background: color-mix(in srgb, currentColor 8%, transparent);
+  }
+
+  .social-mark {
+    display: grid;
+    width: 1.45rem;
+    height: 1.45rem;
+    place-items: center;
+    border-radius: 50%;
+    background: currentColor;
+    color: var(--surface, #fff);
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+  }
+
+  .compact a {
+    padding: 0.42rem 0.58rem;
+    font-size: 0.66rem;
+  }
+
+  .compact .social-mark {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+</style>

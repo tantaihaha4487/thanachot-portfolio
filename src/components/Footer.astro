@@ -1,0 +1,104 @@
+---
+import type { PortfolioContent } from "../data/portfolio";
+import SocialLinks from "./SocialLinks.astro";
+
+interface Props {
+  footer: PortfolioContent["footer"];
+  socials: PortfolioContent["socials"];
+}
+
+const { footer, socials } = Astro.props;
+---
+
+<footer class="section-shell">
+  <div class="footer-top">
+    <p class="quote">“{footer.quote}”</p>
+    <p class="signoff">Still learning.<br />Still making.</p>
+  </div>
+  <div class="mobile-socials">
+    <SocialLinks socials={socials} />
+  </div>
+  <div class="footer-bottom">
+    <p>{footer.copyright}</p>
+    <a href="#top">Back to top ↑</a>
+  </div>
+</footer>
+
+<style>
+  footer {
+    padding-block: clamp(5rem, 10vw, 10rem) 2rem;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 2rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 1.5rem;
+  }
+
+  .quote {
+    max-width: 14ch;
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(3.5rem, 8vw, 9rem);
+    font-style: italic;
+    letter-spacing: -0.07em;
+    line-height: 0.83;
+  }
+
+  .signoff {
+    color: var(--accent-coral);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    line-height: 1.7;
+    text-align: right;
+    text-transform: uppercase;
+  }
+
+  .mobile-socials {
+    display: none;
+    margin-top: 4rem;
+  }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 7rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 1rem;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .footer-bottom p {
+    margin: 0;
+  }
+
+  .footer-bottom a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  @media (max-width: 1023px) {
+    .mobile-socials {
+      display: block;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .footer-top {
+      grid-template-columns: 1fr;
+    }
+
+    .signoff {
+      text-align: left;
+    }
+  }
+</style>

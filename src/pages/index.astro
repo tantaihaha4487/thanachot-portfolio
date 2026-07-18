@@ -1,11 +1,41 @@
 ---
+import Footer from "../components/Footer.astro";
+import Gallery from "../components/Gallery.astro";
+import Hero from "../components/Hero.astro";
+import ProfileStory from "../components/ProfileStory.astro";
+import ProjectTiles from "../components/ProjectTiles.astro";
+import SectionSeparator from "../components/SectionSeparator.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { portfolio } from "../data/portfolio";
 ---
 
 <BaseLayout>
   <main>
-    <h1>{portfolio.identity.displayName}</h1>
-    <p>{portfolio.identity.tagline}</p>
+    <Hero
+      identity={portfolio.identity}
+      projects={portfolio.projects}
+      socials={portfolio.socials}
+    />
+    <ProfileStory identity={portfolio.identity} biography={portfolio.biography} />
+    <Gallery entries={portfolio.gallery} slot="mosaic" />
+    <section class="mobile-work section-shell" aria-labelledby="work-heading">
+      <p class="mobile-work-kicker">Selected work</p>
+      <h2 id="work-heading">Things I’m making.</h2>
+      <ProjectTiles projects={portfolio.projects} />
+    </section>
+    <Gallery entries={portfolio.gallery} slot="strip" />
+    <SectionSeparator label="Open source · Games · Music · Anime" />
   </main>
+  <Footer footer={portfolio.footer} socials={portfolio.socials} />
 </BaseLayout>
+
+<style>
+  .mobile-work-kicker {
+    margin: 0 0 1rem;
+    color: var(--accent-coral);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+</style>

@@ -1,0 +1,32 @@
+---
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<div class="separator section-shell" aria-hidden="true">
+  <span>{label}</span>
+</div>
+
+<style>
+  .separator {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  .separator::before,
+  .separator::after {
+    height: 1px;
+    flex: 1;
+    background: var(--rule);
+    content: "";
+  }
+</style>

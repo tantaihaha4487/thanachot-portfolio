@@ -1,0 +1,213 @@
+---
+import type { PortfolioContent } from "../data/portfolio";
+import ProjectTiles from "./ProjectTiles.astro";
+import SocialLinks from "./SocialLinks.astro";
+
+interface Props {
+  identity: PortfolioContent["identity"];
+  projects: PortfolioContent["projects"];
+  socials: PortfolioContent["socials"];
+}
+
+const { identity, projects, socials } = Astro.props;
+---
+
+<section class="hero-stage" data-desktop-hero aria-label="Introduction">
+  <div class="hero-sticky" data-hero-sticky>
+    <img class="hero-background" src="/AVATAR.jpg" alt="" aria-hidden="true" />
+    <div class="hero-wash" aria-hidden="true"></div>
+
+    <div class="hero-shell">
+      <div class="hero-meta">
+        <span>{identity.fullName}</span>
+        <span lang="th">{identity.thaiName}</span>
+        <span>@{identity.handle}</span>
+      </div>
+
+      <div class="hero-heading">
+        <p class="eyebrow">Developer · Mod maker · Experimenter</p>
+        <h1>{identity.displayName}</h1>
+        <p class="tagline">{identity.tagline}</p>
+      </div>
+
+      <div class="portrait-window" aria-hidden="true">
+        <img src="/AVATAR.jpg" alt="" />
+      </div>
+
+      <div class="hero-work">
+        <ProjectTiles projects={projects} testHooks />
+      </div>
+
+      <div class="hero-socials">
+        <SocialLinks socials={socials} compact testHooks />
+      </div>
+
+      <p class="scroll-note"><span aria-hidden="true">↓</span> Scroll to meet the maker</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-stage {
+    position: relative;
+    height: 175dvh;
+    min-height: 70rem;
+    color: #171816;
+  }
+
+  .hero-sticky {
+    position: sticky;
+    top: 0;
+    height: 100dvh;
+    min-height: 42rem;
+    overflow: clip;
+    background: #ddd9d0;
+  }
+
+  .hero-background {
+    position: absolute;
+    inset: -7%;
+    width: 114%;
+    height: 114%;
+    object-fit: cover;
+    object-position: 50% 44%;
+    filter: saturate(0.66) contrast(0.92) brightness(1.08) blur(5px);
+    opacity: 0.52;
+    transform: translate3d(var(--hero-bg-x, 0), var(--hero-bg-y, 0), 0) scale(1.035);
+  }
+
+  .hero-wash {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(247, 244, 237, 0.97) 0%, rgba(247, 244, 237, 0.73) 36%, rgba(247, 244, 237, 0.2) 69%, rgba(247, 244, 237, 0.84) 100%),
+      linear-gradient(0deg, rgba(242, 239, 231, 0.98) 0%, transparent 44%);
+  }
+
+  .hero-shell {
+    position: relative;
+    display: grid;
+    width: min(100% - 3rem, 112rem);
+    height: 100%;
+    margin-inline: auto;
+    grid-template-columns: minmax(21rem, 0.92fr) minmax(25rem, 1.08fr);
+    grid-template-rows: auto 1fr auto;
+    gap: 1rem 2rem;
+    padding-block: 1.5rem 1.25rem;
+  }
+
+  .hero-meta {
+    display: flex;
+    grid-column: 1 / -1;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(23, 24, 22, 0.2);
+    padding-bottom: 0.9rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  .hero-heading {
+    z-index: 3;
+    align-self: center;
+    padding-bottom: 7.5rem;
+  }
+
+  .eyebrow {
+    margin: 0 0 1rem;
+    color: #48524a;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(6rem, 11.2vw, 13.5rem);
+    font-weight: 450;
+    letter-spacing: -0.085em;
+    line-height: 0.72;
+  }
+
+  .tagline {
+    width: min(34rem, 82%);
+    margin: 1.8rem 0 0 0.2rem;
+    font-family: var(--font-serif);
+    font-size: clamp(1.3rem, 2vw, 2.35rem);
+    font-style: italic;
+    line-height: 1.08;
+  }
+
+  .portrait-window {
+    position: absolute;
+    z-index: 2;
+    top: 8%;
+    right: clamp(2rem, 8vw, 10rem);
+    width: min(37vw, 42rem);
+    height: 76%;
+    overflow: hidden;
+    border-radius: 48% 48% 0.5rem 0.5rem;
+    box-shadow: 0 2rem 6rem rgba(39, 36, 29, 0.2);
+    transform: translate3d(var(--hero-fg-x, 0), var(--hero-fg-y, 0), 0);
+  }
+
+  .portrait-window img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 44%;
+    filter: saturate(0.88) contrast(0.98);
+  }
+
+  .hero-work {
+    z-index: 5;
+    grid-column: 1 / -1;
+    align-self: end;
+    width: min(69rem, 76%);
+  }
+
+  .hero-socials {
+    position: absolute;
+    z-index: 6;
+    right: 0;
+    bottom: 1.35rem;
+    max-width: 22rem;
+    color: #303631;
+  }
+
+  .scroll-note {
+    position: absolute;
+    right: 0;
+    top: 5rem;
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.63rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+  }
+
+  @media (max-width: 1180px) {
+    .hero-shell {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .hero-work {
+      width: calc(100% - 13rem);
+    }
+
+    .hero-socials {
+      max-width: 12rem;
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .hero-stage {
+      display: none;
+    }
+  }
+</style>

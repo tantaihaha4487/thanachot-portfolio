@@ -1,0 +1,29 @@
+---
+import { Picture } from "astro:assets";
+import type { GalleryEntry } from "../data/portfolio";
+
+interface Props {
+  entries: readonly GalleryEntry[];
+  slot: GalleryEntry["slot"];
+}
+
+const { entries, slot } = Astro.props;
+const selected = entries.filter((entry) => entry.slot === slot);
+---
+
+{
+  selected.length > 0 && (
+    <section class={`gallery gallery-${slot}`} aria-label={`${slot} photo gallery`}>
+      {selected.map((entry) => (
+        <Picture
+          src={entry.image}
+          formats={["avif", "webp"]}
+          alt={entry.alt}
+          widths={[480, 768, 1200]}
+          sizes="(max-width: 768px) 100vw, 50vw"
+          style={`object-position:${entry.cropPosition}`}
+        />
+      ))}
+    </section>
+  )
+}

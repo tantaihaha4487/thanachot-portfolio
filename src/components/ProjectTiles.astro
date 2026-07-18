@@ -1,0 +1,117 @@
+---
+import type { PortfolioContent } from "../data/portfolio";
+
+interface Props {
+  projects: PortfolioContent["projects"];
+  testHooks?: boolean;
+}
+
+const { projects, testHooks = false } = Astro.props;
+---
+
+<div class="project-grid">
+  {
+    projects.map((project, index) => (
+      <a
+        class={`project-card accent-${project.accent}`}
+        href={project.href}
+        target={project.href.startsWith("https://") ? "_blank" : undefined}
+        rel={project.href.startsWith("https://") ? "noopener noreferrer" : undefined}
+        data-project-link={testHooks ? "" : undefined}
+      >
+        <span class="project-index" aria-hidden="true">0{index + 1}</span>
+        <span class="project-copy">
+          <strong>{project.name}</strong>
+          <span>{project.description}</span>
+        </span>
+        <span class="project-arrow" aria-hidden="true">↗</span>
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(0.65rem, 1vw, 1rem);
+  }
+
+  .project-card {
+    --accent: #536bc9;
+    position: relative;
+    display: grid;
+    min-height: 8.75rem;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.8rem;
+    padding: 1rem;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--accent) 28%, #c9c6be);
+    border-radius: 0.35rem;
+    background: color-mix(in srgb, var(--surface, #fff) 90%, transparent);
+    color: var(--ink, #191a18);
+    text-decoration: none;
+    backdrop-filter: blur(16px);
+    transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+  }
+
+  .project-card::after {
+    position: absolute;
+    right: -15%;
+    bottom: -45%;
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+    background: var(--accent);
+    content: "";
+    filter: blur(44px);
+    opacity: 0.14;
+  }
+
+  .project-card:hover {
+    z-index: 1;
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--surface, #fff) 96%, var(--accent));
+    transform: translateY(-0.22rem);
+  }
+
+  .accent-violet { --accent: #7a59b4; }
+  .accent-blue { --accent: #426f9e; }
+  .accent-coral { --accent: #bb654d; }
+
+  .project-index {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    font-weight: 700;
+  }
+
+  .project-copy {
+    display: flex;
+    flex-direction: column;
+    align-self: end;
+    gap: 0.35rem;
+  }
+
+  strong {
+    font-family: var(--font-serif);
+    font-size: clamp(1.15rem, 1.5vw, 1.55rem);
+    font-weight: 500;
+  }
+
+  .project-copy > span {
+    color: var(--muted, #60635e);
+    font-size: 0.72rem;
+    line-height: 1.45;
+  }
+
+  .project-arrow {
+    color: var(--accent);
+  }
+
+  @media (max-width: 720px) {
+    .project-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

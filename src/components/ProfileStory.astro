@@ -1,0 +1,178 @@
+---
+import type { PortfolioContent } from "../data/portfolio";
+
+interface Props {
+  identity: PortfolioContent["identity"];
+  biography: PortfolioContent["biography"];
+}
+
+const { identity, biography } = Astro.props;
+const github = "https://github.com/tantaihaha4487";
+const modrinth = "https://modrinth.com/user/tantaihaha4487";
+---
+
+<section class="profile section-shell" data-profile-story aria-labelledby="profile-heading">
+  <div class="profile-intro">
+    <p class="section-kicker">Profile · 2026</p>
+    <h2 id="profile-heading">A curious builder,<br />working in public.</h2>
+    <div class="identity-line">
+      <span>{identity.fullName}</span>
+      <span lang="th">{identity.thaiName}</span>
+      <span>@{identity.handle}</span>
+    </div>
+  </div>
+
+  <div class="portrait-column">
+    <figure data-profile-portrait>
+      <img src="/AVATAR.jpg" alt="Thanachot Phomthong standing outdoors" />
+    </figure>
+    <p class="caption">Thailand · Developer and maker</p>
+  </div>
+
+  <div class="story-copy" data-story-copy>
+    <p>{biography[0]}</p>
+    <p>{biography[1]}</p>
+    <p id="mashiro">{biography[2]}</p>
+    <p>
+      Most of my work lives around TypeScript, web development, Fabric modding, and open source.
+      You can find my projects on <a href={github} target="_blank" rel="noopener noreferrer">GitHub</a>
+      and my mods on <a href={modrinth} target="_blank" rel="noopener noreferrer">Modrinth</a>.
+    </p>
+    <p>{biography[4]}</p>
+  </div>
+</section>
+
+<style>
+  .profile {
+    display: grid;
+    grid-template-columns: minmax(14rem, 0.7fr) minmax(19rem, 0.8fr) minmax(25rem, 1.15fr);
+    gap: clamp(2rem, 5vw, 6rem);
+    padding-block: clamp(6rem, 10vw, 11rem);
+  }
+
+  .profile-intro {
+    align-self: start;
+  }
+
+  .section-kicker,
+  .caption,
+  .identity-line {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.075em;
+    text-transform: uppercase;
+  }
+
+  .section-kicker {
+    margin: 0 0 2.5rem;
+    color: var(--accent-blue);
+  }
+
+  h2 {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(2.7rem, 4.5vw, 5.4rem);
+    font-weight: 450;
+    letter-spacing: -0.055em;
+    line-height: 0.98;
+  }
+
+  .identity-line {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    margin-top: 3rem;
+    color: var(--muted);
+  }
+
+  figure {
+    aspect-ratio: 3 / 2;
+    margin: 0;
+    overflow: hidden;
+    background: #dedbd4;
+  }
+
+  figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 44%;
+    filter: saturate(0.88) contrast(0.96);
+  }
+
+  .caption {
+    margin: 0.8rem 0 0;
+    color: var(--muted);
+  }
+
+  .story-copy {
+    max-width: 47rem;
+  }
+
+  .story-copy p {
+    margin: 0 0 1.5em;
+    font-family: var(--font-serif);
+    font-size: clamp(1.35rem, 1.8vw, 2.1rem);
+    line-height: 1.36;
+  }
+
+  .story-copy p:first-child {
+    font-size: clamp(2rem, 3.1vw, 3.75rem);
+    letter-spacing: -0.035em;
+    line-height: 1.12;
+  }
+
+  a {
+    color: var(--accent-blue);
+    text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+    text-underline-offset: 0.16em;
+  }
+
+  a:hover {
+    color: var(--accent-coral);
+  }
+
+  @media (max-width: 1023px) {
+    .profile {
+      grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+      padding-top: clamp(3rem, 8vw, 6rem);
+    }
+
+    .profile-intro {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      border-top: 1px solid var(--rule);
+      padding-top: 1rem;
+    }
+
+    .section-kicker {
+      grid-column: 1 / -1;
+      margin-bottom: 0;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .profile {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .profile-intro {
+      display: block;
+    }
+
+    .section-kicker {
+      margin-bottom: 2rem;
+    }
+
+    .portrait-column {
+      order: 2;
+    }
+
+    .story-copy {
+      order: 1;
+    }
+  }
+</style>

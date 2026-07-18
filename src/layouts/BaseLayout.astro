@@ -2,6 +2,7 @@
 import Metadata from "../components/Metadata.astro";
 import { portfolio } from "../data/portfolio";
 import { createProfilePageSchema } from "../data/seo";
+import "../styles/global.css";
 
 interface Props {
   title?: string;
@@ -37,7 +38,7 @@ const schema = noindex ? undefined : createProfilePageSchema(portfolio);
       {schema}
     />
   </head>
-  <body>
+  <body id="top">
     <slot />
   </body>
 </html>
