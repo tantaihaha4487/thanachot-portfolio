@@ -1,0 +1,11 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { portfolio } from "../data/portfolio";
+---
+
+<BaseLayout>
+  <main>
+    <h1>{portfolio.identity.displayName}</h1>
+    <p>{portfolio.identity.tagline}</p>
+  </main>
+</BaseLayout>
