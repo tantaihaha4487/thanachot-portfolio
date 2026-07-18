@@ -80,7 +80,7 @@ export default async function ModrinthSection() {
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-12">
         <div className="mb-14">
           <div className="flex items-center gap-3 mb-3">
-            <span className="mono-label syn-comment">// section_04</span>
+            <span className="mono-label syn-comment">{"// section_04"}</span>
             <span className="w-12 h-px opacity-20" style={{ background: "#60A5FA" }} />
           </div>
           <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 sm:gap-6">
@@ -88,7 +88,7 @@ export default async function ModrinthSection() {
               className="text-3xl sm:text-4xl lg:text-5xl font-bold"
               style={{ fontFamily: "var(--font-geist-sans)" }}
             >
-              <span className="syn-keyword" style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.7em", marginRight: "0.4em" }}>//</span>
+              <span className="syn-keyword" style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.7em", marginRight: "0.4em" }}>{"//"}</span>
               <span>Minecraft Mods</span>
             </h2>
             <a

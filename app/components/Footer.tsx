@@ -53,7 +53,7 @@ export default function Footer() {
           className="flex items-center gap-3"
         >
           <span className="w-8 h-px opacity-20" style={{ background: "#F472B6" }} />
-          <span className="mono-label syn-comment">// Footer</span>
+          <span className="mono-label syn-comment">{"// Footer"}</span>
           <span className="w-8 h-px opacity-20" style={{ background: "#F472B6" }} />
         </motion.div>
 
@@ -78,7 +78,7 @@ export default function Footer() {
             style={{ borderBottom: "1px solid rgba(244,114,182,0.5)", borderRight: "1px solid rgba(244,114,182,0.5)" }}
           />
 
-          <div className="mono-label syn-comment mb-4">// quote</div>
+          <div className="mono-label syn-comment mb-4">{"// quote"}</div>
 
           {/* Animated quote */}
           <div ref={quoteRef}>

@@ -44,7 +44,7 @@ export default function MashiroSection() {
           className="mb-14"
         >
           <div className="flex items-center gap-3 mb-3">
-            <span className="mono-label syn-comment">// section_02</span>
+            <span className="mono-label syn-comment">{"// section_02"}</span>
             <span className="w-12 h-px opacity-20" style={{ background: "#C084FC" }} />
           </div>
           <h2
@@ -200,7 +200,7 @@ export default function MashiroSection() {
                     className="text-sm italic leading-relaxed"
                     style={{ color: "#8892A4" }}
                   >
-                    <span className="syn-comment">// system_prompt</span>
+                    <span className="syn-comment">{"// system_prompt"}</span>
                     <br />
                     &quot;Always respond as Mashiro, a 1000-year-old cat girl. Keep responses light,{" "}
                     <span style={{ color: "#E2E8F0" }}>playful, and uniquely expressive.</span>&quot;
