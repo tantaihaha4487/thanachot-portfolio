@@ -45,4 +45,3 @@ bun.lock
 .agents
 .windsurf
 skills-lock.json
-package-lock.json
