@@ -17,6 +17,7 @@ import {
   useTransform,
 } from "framer-motion";
 import { useRef } from "react";
+import { socialLinks } from "../lib/social-links";
 
 const projects = [
   {
@@ -47,38 +48,20 @@ function XIcon({ className }: { className?: string }) {
   );
 }
 
-const socials = [
-  {
-    label: "GitHub",
-    href: "https://github.com/tantaihaha4487",
-    icon: Github,
-  },
-  {
-    label: "X",
-    href: "https://x.com/TantaiHaha",
-    icon: XIcon,
-  },
-  {
-    label: "Modrinth",
-    href: "https://modrinth.com/user/tantaihaha4487",
-    icon: Boxes,
-  },
-  {
-    label: "Instagram",
-    href: "https://www.instagram.com/txntai._exec/",
-    icon: Instagram,
-  },
-  {
-    label: "Facebook",
-    href: "https://www.facebook.com/thanachot.phomthong",
-    icon: Facebook,
-  },
-  {
-    label: "Discord",
-    href: "https://discord.gg/3R2vhgQqde",
-    icon: MessageCircle,
-  },
-];
+const socialIcons: Record<string, React.ComponentType<{ className?: string }>> = {
+  GitHub: Github,
+  X: XIcon,
+  Modrinth: Boxes,
+  Instagram: Instagram,
+  Facebook: Facebook,
+  Discord: MessageCircle,
+};
+
+const socials = socialLinks.map((s) => ({
+  label: s.name,
+  href: s.href,
+  icon: socialIcons[s.name],
+}));
 
 export default function HeroSection() {
   const heroRef = useRef<HTMLElement>(null);
@@ -218,6 +201,13 @@ export default function HeroSection() {
               <br />
               Phomthong
             </h1>
+
+            <p className="mt-3 max-w-xl text-sm leading-6 text-white/75">
+              Also known online as{" "}
+              <span className="font-medium text-white">tantaihaha4487</span> (
+              <span className="text-white/85">tantaihaha</span>) — ธนโชติ พรมทอง,
+              developer and Minecraft mod author based in Bangkok, Thailand.
+            </p>
 
             <div className="mt-8 grid max-w-2xl grid-cols-3 gap-3">
               {projects.map((project) => (

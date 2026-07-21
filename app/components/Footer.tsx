@@ -3,15 +3,9 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { animate, stagger } from "animejs";
+import { socialLinks } from "../lib/social-links";
 
-const socials = [
-  { label: "GitHub", href: "https://github.com/tantaihaha4487" },
-  { label: "X", href: "https://x.com/TantaiHaha" },
-  { label: "Modrinth", href: "https://modrinth.com/user/tantaihaha4487" },
-  { label: "Instagram", href: "https://www.instagram.com/txntai._exec/" },
-  { label: "Facebook", href: "https://www.facebook.com/thanachot.phomthong" },
-  { label: "Discord", href: "https://discord.gg/3R2vhgQqde" },
-];
+const socials = socialLinks.map((s) => ({ label: s.name, href: s.href }));
 
 export default function Footer() {
   const quoteRef = useRef<HTMLDivElement>(null);

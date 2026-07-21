@@ -1,16 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { sameAsLinks } from "./lib/social-links";
 
 const BASE_URL = "https://thanachot.xyz";
-
-const socialLinks = [
-  { name: "GitHub", url: "https://github.com/tantaihaha4487" },
-  { name: "X", url: "https://x.com/TantaiHaha" },
-  { name: "Modrinth", url: "https://modrinth.com/user/tantaihaha4487" },
-  { name: "Instagram", url: "https://www.instagram.com/txntai._exec/" },
-  { name: "Facebook", url: "https://www.facebook.com/thanachot.phomthong" },
-  { name: "Discord", url: "https://discord.gg/3R2vhgQqde" },
-];
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
@@ -21,8 +13,10 @@ export const metadata: Metadata = {
   description:
     "Portfolio of Thanachot Phomthong (tantaihaha4487) — developer & builder. Minecraft mod author on Modrinth, open-source contributor on GitHub.",
   keywords: [
-    "tantaihaha",
     "tantaihaha4487",
+    "thanachot phomthong",
+    "thanachot",
+    "tantaihaha",
     "Thanachot P.",
     "Thanachot Phomthong",
     "ธนโชติ",
@@ -61,15 +55,6 @@ export const metadata: Metadata = {
     title: "Thanachot Phomthong | tantaihaha4487",
     description:
       "Portfolio of Thanachot Phomthong — developer, creator, and builder. Minecraft mod author on Modrinth, open-source contributor on GitHub.",
-    images: [
-      {
-        url: `${BASE_URL}/hero-background.png`,
-        width: 1200,
-        height: 630,
-        alt: "Thanachot Phomthong — Developer & Builder",
-        type: "image/png",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -78,14 +63,9 @@ export const metadata: Metadata = {
     title: "Thanachot Phomthong | tantaihaha4487",
     description:
       "Portfolio of Thanachot Phomthong — developer, creator, and builder. Minecraft mod author on Modrinth, open-source contributor on GitHub.",
-    images: [`${BASE_URL}/hero-background.png`],
   },
   alternates: {
     canonical: BASE_URL,
-    languages: {
-      "en-US": BASE_URL,
-      "th-TH": `${BASE_URL}/th`,
-    },
   },
   category: "technology",
   classification: "portfolio",
@@ -108,12 +88,12 @@ export default function RootLayout({
     "@type": "Person",
     "@id": `${BASE_URL}/#person`,
     name: "Thanachot Phomthong",
-    alternateName: "tantaihaha4487",
+    alternateName: ["tantaihaha4487", "tantaihaha", "ธนโชติ พรมทอง"],
     url: BASE_URL,
     jobTitle: "Developer",
     description: "Portfolio of Thanachot Phomthong — developer, creator, and builder. Minecraft mod author on Modrinth, open-source contributor on GitHub.",
     image: `${BASE_URL}/hero-background.png`,
-    sameAs: socialLinks.map((s) => s.url),
+    sameAs: sameAsLinks,
     knowsAbout: [
       "Web Development",
       "Minecraft Modding",
@@ -150,7 +130,7 @@ export default function RootLayout({
     name: "Thanachot Phomthong Portfolio",
     url: BASE_URL,
     logo: `${BASE_URL}/hero-background.png`,
-    sameAs: socialLinks.map((s) => s.url),
+    sameAs: sameAsLinks,
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "Developer",

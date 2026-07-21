@@ -25,8 +25,9 @@ export default function ProfileStory() {
         <h1>Code, Mods, and Making Things</h1>
         <div className="editorial-story__copy">
           <p>
-            I code, build, and experiment with things that interest me. Most of
-            my work lives around TypeScript, Next.js, React, and Fabric.
+            I&apos;m Thanachot (tantaihaha4487) — I code, build, and experiment
+            with things that interest me. Most of my work lives around
+            TypeScript, Next.js, React, and Fabric.
           </p>
           <p>
             I make web applications, Minecraft mods, and small tools that solve
