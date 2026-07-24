@@ -24,6 +24,7 @@ export default async function Image() {
       >
         <img
           src={imageSrc}
+          alt=""
           style={{
             position: "absolute",
             top: 0,

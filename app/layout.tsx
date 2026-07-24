@@ -139,6 +139,10 @@ export default function RootLayout({
   };
 
   const schemas = [personSchema, profilePageSchema, organizationSchema];
+  const jsonLd = JSON.stringify(schemas)
+    .replace(/</g, "\\u003c")
+    .replace(/\u2028/g, "\\u2028")
+    .replace(/\u2029/g, "\\u2029");
 
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
@@ -147,7 +151,7 @@ export default function RootLayout({
       >
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas) }}
+          dangerouslySetInnerHTML={{ __html: jsonLd }}
         />
         {children}
       </body>

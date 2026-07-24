@@ -19,7 +19,7 @@ function AccentLink({
 
 export default function ProfileStory() {
   return (
-    <section className="editorial-story">
+    <section id="about" className="editorial-story">
       <div className="editorial-story__content">
         <p className="editorial-kicker">A little about me</p>
         <h1>Code, Mods, and Making Things</h1>

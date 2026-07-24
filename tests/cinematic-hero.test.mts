@@ -22,13 +22,18 @@ test("navbar remains usable if the hero is missing", () => {
 
 test("hero source retains the responsive and navigation contract", async () => {
   const source = await readFile("app/components/HeroSection.tsx", "utf8");
+  const styles = await readFile("app/globals.css", "utf8");
   assert.match(source, /data-cinematic-hero/);
-  assert.match(source, /hidden h-dvh lg:block/);
+  assert.match(source, /hidden h-\[175dvh\] lg:block/);
   assert.match(source, /href: "#mashiro"/);
   assert.match(source, /href: "#projects"/);
   assert.match(source, /href: "#mods"/);
   assert.match(source, /useReducedMotion/);
-  assert.match(source, /const \{ scrollY \} = useScroll\(\);/);
+  assert.match(source, /target: heroRef/);
+  assert.match(source, /data-cinematic-socials/);
+  assert.match(source, /href="#about"/);
+  assert.match(source, /pointerEvents: prefersReducedMotion/);
+  assert.match(styles, /\.editorial-page\s*\{[\s\S]*?overflow-x: clip;/);
 });
 
 test("navbar consumes the cinematic visibility contract", async () => {
@@ -60,6 +65,6 @@ test("hero layers the supplied portrait cutout above a blurred background", asyn
   assert.match(source, /blur-\[10px\]/);
   assert.match(
     source,
-    /const portraitX = useTransform\(scrollY, \[0, 480\], \[0, 160\]\);/,
+    /const portraitX = useTransform\(scrollYProgress, \[0, 0\.42\], \[0, 160\]\);/,
   );
 });

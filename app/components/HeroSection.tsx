@@ -72,31 +72,43 @@ export default function HeroSection() {
   const smoothY = useSpring(pointerY, { stiffness: 70, damping: 20 });
   const portraitPointerX = useTransform(smoothX, (value) => value * -0.35);
   const portraitPointerY = useTransform(smoothY, (value) => value * -0.35);
-  const { scrollY } = useScroll();
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
 
-  const introOpacity = useTransform(
-    scrollY,
-    [0, 120, 360],
-    [1, 1, 0],
+  const introOpacity = useTransform(scrollYProgress, (progress) =>
+    progress <= 0.14
+      ? 1
+      : progress >= 0.32
+        ? 0
+        : 1 - (progress - 0.14) / 0.18,
   );
-  const introScale = useTransform(scrollY, [0, 360], [1, 2]);
-  const contentOpacity = useTransform(
-    scrollY,
-    [0, 180, 480],
-    [0, 0, 1],
+  const introScale = useTransform(scrollYProgress, [0, 0.32], [1, 2]);
+  const contentOpacity = useTransform(scrollYProgress, (progress) =>
+    progress <= 0.18
+      ? 0
+      : progress >= 0.42
+        ? 1
+        : (progress - 0.18) / 0.24,
   );
   const contentScale = useTransform(
-    scrollY,
-    [180, 480],
+    scrollYProgress,
+    [0.18, 0.42],
     [0.88, 1],
   );
-  const contentX = useTransform(scrollY, [180, 480], [-72, 0]);
-  const photoScale = useTransform(scrollY, [0, 560], [1.1, 1.02]);
-  const portraitX = useTransform(scrollY, [0, 480], [0, 160]);
-  const portraitScale = useTransform(scrollY, [0, 480], [1, 1.02]);
+  const contentX = useTransform(scrollYProgress, [0.18, 0.42], [-72, 0]);
+  const contentPointerEvents = useTransform(
+    scrollYProgress,
+    [0.32, 0.42],
+    ["none", "auto"],
+  );
+  const photoScale = useTransform(scrollYProgress, [0, 0.5], [1.1, 1.02]);
+  const portraitX = useTransform(scrollYProgress, [0, 0.42], [0, 160]);
+  const portraitScale = useTransform(scrollYProgress, [0, 0.42], [1, 1.02]);
   const shadeOpacity = useTransform(
-    scrollY,
-    [0, 480],
+    scrollYProgress,
+    [0, 0.42],
     [0.14, 0.58],
   );
 
@@ -116,7 +128,7 @@ export default function HeroSection() {
       id="home"
       ref={heroRef}
       data-cinematic-hero
-      className="relative hidden h-dvh lg:block"
+      className="relative hidden h-[175dvh] lg:block"
       onPointerMove={onPointerMove}
       onPointerLeave={resetPointer}
     >
@@ -149,7 +161,7 @@ export default function HeroSection() {
 
         <motion.p
           aria-hidden
-          className="cinematic-intro absolute inset-0 flex items-center justify-center whitespace-nowrap text-[18vw] font-bold leading-none tracking-[-0.08em] text-white mix-blend-overlay"
+          className="cinematic-intro absolute inset-0 z-10 flex items-center justify-center whitespace-nowrap text-[18vw] font-bold leading-none tracking-[-0.08em] text-white mix-blend-overlay"
           style={{
             opacity: prefersReducedMotion ? 0 : introOpacity,
             scale: prefersReducedMotion ? 2 : introScale,
@@ -185,11 +197,12 @@ export default function HeroSection() {
         </motion.div>
 
         <motion.div
-          className="cinematic-content relative z-10 flex h-full max-w-7xl items-center px-12 xl:px-20"
+          className="cinematic-content relative z-30 flex h-full max-w-7xl items-center px-12 xl:px-20"
           style={{
             opacity: prefersReducedMotion ? 1 : contentOpacity,
             scale: prefersReducedMotion ? 1 : contentScale,
             x: prefersReducedMotion ? 0 : contentX,
+            pointerEvents: prefersReducedMotion ? "auto" : contentPointerEvents,
           }}
         >
           <div className="w-full max-w-3xl">
@@ -229,7 +242,11 @@ export default function HeroSection() {
               ))}
             </div>
 
-            <div className="mt-6 flex flex-wrap gap-2">
+            <nav
+              aria-label="Social links"
+              data-cinematic-socials
+              className="cinematic-social-rail mt-5 flex flex-wrap items-center gap-2"
+            >
               {socials.map((social) => {
                 const Icon = social.icon;
                 return (
@@ -240,13 +257,20 @@ export default function HeroSection() {
                     rel="noopener noreferrer"
                     title={social.label}
                     aria-label={social.label}
-                    className="cinematic-social-link flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-black/15 text-white/70 backdrop-blur-md"
+                    className="cinematic-social-link flex h-9 w-9 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white/80 shadow-lg backdrop-blur-md"
                   >
                     <Icon aria-hidden className="h-4 w-4" />
                   </a>
                 );
               })}
-            </div>
+            </nav>
+
+            <a
+              href="#about"
+              className="mt-7 inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-2 font-mono text-xs uppercase tracking-[0.16em] text-white/80 backdrop-blur-md transition hover:bg-white/20 hover:text-white"
+            >
+              About me <span aria-hidden>↗</span>
+            </a>
           </div>
         </motion.div>
 
