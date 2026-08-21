@@ -1,27 +1,23 @@
 import Image from "next/image";
+import { galleryImages, type GalleryImage as GalleryImageData } from "../lib/site-content";
 
-const gallery = [
-  { src: "/images/IMG_2650.jpg", className: "gallery-mosaic__wide", position: "center" },
-  { src: "/images/IMG_4220.JPG", className: "gallery-mosaic__wide", position: "center" },
-  { src: "/images/_TGL4559.jpg", className: "gallery-mosaic__tall", position: "center" },
-  { src: "/images/OPEN HOUSE-0714_Original.JPG", className: "gallery-mosaic__small", position: "center" },
-];
+const mosaicImages = galleryImages.filter((image) => image.layout !== "strip");
+const stripImages = galleryImages.filter((image) => image.layout === "strip");
 
-const strip = [
-  { src: "/images/IMG_3895.JPG", position: "center" },
-  { src: "/images/_TGL3879.JPG", position: "center" },
-  { src: "/images/IMG_9065.JPG", position: "center" },
-];
+function GalleryImage({ image }: { image: GalleryImageData }) {
+  const className =
+    image.layout === "strip"
+      ? "gallery-strip__image"
+      : `gallery-mosaic__${image.layout}`;
 
-function GalleryImage({ src, position, className }: { src: string; position: string; className: string }) {
   return (
     <div className={`gallery-image ${className}`}>
       <Image
-        src={src}
-        alt="Thanachot's selected photography"
+        src={image.src}
+        alt={image.alt}
         fill
         sizes="(max-width: 639px) calc(100vw - 2rem), (max-width: 767px) 100vw, 64vw"
-        style={{ objectPosition: position }}
+        style={{ objectPosition: image.position }}
       />
     </div>
   );
@@ -29,23 +25,37 @@ function GalleryImage({ src, position, className }: { src: string; position: str
 
 export default function PhotoGallery() {
   return (
-    <section className="editorial-gallery" aria-label="Selected photographs">
-      <div className="editorial-separator" aria-hidden="true"><span>♡</span></div>
+    <section
+      id="photography"
+      className="editorial-gallery"
+      aria-labelledby="photography-heading"
+    >
+      <div className="editorial-separator" aria-hidden="true">
+        <span>♡</span>
+      </div>
+      <div className="editorial-section-heading editorial-section-heading--gallery">
+        <p className="editorial-kicker">Away from the editor</p>
+        <h2 id="photography-heading">Selected Photography</h2>
+        <p>
+          Small records of classrooms, technology, people, and quiet details
+          around me in Thailand.
+        </p>
+      </div>
       <div className="gallery-mosaic">
         <div className="gallery-mosaic__column gallery-mosaic__column--large">
-          {gallery.slice(0, 2).map((image, index) => (
-            <GalleryImage key={index} {...image} />
+          {mosaicImages.slice(0, 2).map((image) => (
+            <GalleryImage key={image.src} image={image} />
           ))}
         </div>
         <div className="gallery-mosaic__column gallery-mosaic__column--narrow">
-          {gallery.slice(2).map((image, index) => (
-            <GalleryImage key={index} {...image} />
+          {mosaicImages.slice(2).map((image) => (
+            <GalleryImage key={image.src} image={image} />
           ))}
         </div>
       </div>
       <div className="gallery-strip">
-        {strip.map((image, index) => (
-          <GalleryImage key={index} {...image} className="gallery-strip__image" />
+        {stripImages.map((image) => (
+          <GalleryImage key={image.src} image={image} />
         ))}
       </div>
     </section>

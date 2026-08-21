@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { access, readFile } from "node:fs/promises";
 
+import { heroCards } from "../app/lib/site-content.ts";
 import { shouldShowNavbar } from "../app/components/hero-visibility.ts";
 
 test("navbar stays available when the desktop hero is skipped", () => {
@@ -20,34 +21,75 @@ test("navbar remains usable if the hero is missing", () => {
   assert.equal(shouldShowNavbar({ isDesktop: true, heroBottom: null }), true);
 });
 
-test("hero source retains the responsive and navigation contract", async () => {
-  const source = await readFile("app/components/HeroSection.tsx", "utf8");
-  const styles = await readFile("app/globals.css", "utf8");
-  assert.match(source, /data-cinematic-hero/);
-  assert.match(source, /hidden h-\[175dvh\] lg:block/);
-  assert.match(source, /href: "#mashiro"/);
-  assert.match(source, /href: "#projects"/);
-  assert.match(source, /href: "#mods"/);
+test("hero keeps a stable server fallback and only loads motion when eligible", async () => {
+  const gate = await readFile("app/components/HeroSection.tsx", "utf8");
+
+  assert.match(gate, /data-cinematic-hero/);
+  assert.match(gate, /hidden h-\[175dvh\] lg:block/);
+  assert.match(gate, /StaticCinematicHero/);
+  assert.match(gate, /data-static-cinematic-hero/);
+  assert.match(gate, /matchMedia\("\(min-width: 1024px\)"\)/);
+  assert.match(gate, /prefers-reduced-motion: reduce/);
+  assert.match(gate, /import\("\.\/CinematicHero"\)/);
+  assert.doesNotMatch(gate, /from "framer-motion"/);
+});
+
+test("hero navigation targets resolve to rendered sections", () => {
+  const renderedIds = new Set([
+    "home",
+    "about",
+    "projects",
+    "mods",
+    "photography",
+    "mashiro",
+  ]);
+
+  for (const card of heroCards) {
+    assert.equal(renderedIds.has(card.href.slice(1)), true, card.href);
+  }
+});
+
+test("cinematic module retains scroll, pointer, and reduced-motion behavior", async () => {
+  const source = await readFile("app/components/CinematicHero.tsx", "utf8");
+  const content = await readFile("app/components/HeroContent.tsx", "utf8");
+
+  assert.match(source, /from "framer-motion"/);
   assert.match(source, /useReducedMotion/);
   assert.match(source, /target: heroRef/);
-  assert.match(source, /data-cinematic-socials/);
-  assert.match(source, /href="#about"/);
+  assert.match(source, /onPointerMove/);
   assert.match(source, /pointerEvents: prefersReducedMotion/);
-  assert.match(styles, /\.editorial-page\s*\{[\s\S]*?overflow-x: clip;/);
+  assert.match(source, /cinematic-intro/);
+  assert.match(source, /cinematic-content/);
+  assert.match(content, /data-cinematic-socials/);
+  assert.match(content, /href="#about"/);
+  assert.doesNotMatch(source, /priority/);
+  assert.doesNotMatch(source, /next\/image/);
 });
 
-test("navbar consumes the cinematic visibility contract", async () => {
-  const source = await readFile("app/components/Navbar.tsx", "utf8");
-  assert.match(source, /shouldShowNavbar/);
-  assert.match(source, /data-cinematic-hero/);
-  assert.match(source, /cinematic-navbar/);
-});
+test("hero imagery is CSS-gated to desktop without HTML preloads", async () => {
+  await access("public/images/school-bench-hero.webp");
+  await access("public/images/thanachot-portrait-cutout.webp");
 
-test("reduced motion has a CSS fallback for final hero content", async () => {
-  const hero = await readFile("app/components/HeroSection.tsx", "utf8");
+  const gate = await readFile("app/components/HeroSection.tsx", "utf8");
+  const animated = await readFile("app/components/CinematicHero.tsx", "utf8");
   const styles = await readFile("app/globals.css", "utf8");
-  assert.match(hero, /cinematic-intro/);
-  assert.match(hero, /cinematic-content/);
+
+  assert.match(styles, /@media \(min-width: 1024px\) \{[\s\S]*?school-bench-hero\.webp/);
+  assert.match(styles, /thanachot-portrait-cutout\.webp/);
+  assert.match(styles, /\.cinematic-hero-background[\s\S]*?filter: blur\(10px\)/);
+  assert.match(animated, /cinematic-portrait/);
+  assert.match(
+    animated,
+    /const portraitX = useTransform\(scrollYProgress, \[0, 0\.42\], \[0, 160\]\);/,
+  );
+  assert.doesNotMatch(`${gate}\n${animated}`, /<Image|priority/);
+});
+
+test("reduced motion has a static final-content fallback", async () => {
+  const gate = await readFile("app/components/HeroSection.tsx", "utf8");
+  const styles = await readFile("app/globals.css", "utf8");
+
+  assert.match(gate, /StaticCinematicHero/);
   assert.match(styles, /\.cinematic-intro\s*\{\s*display: none !important;/);
   assert.match(
     styles,
@@ -55,16 +97,9 @@ test("reduced motion has a CSS fallback for final hero content", async () => {
   );
 });
 
-test("hero layers the supplied portrait cutout above a blurred background", async () => {
-  await access("public/hero-background.png");
-  await access("public/AVARTAR_object.png");
-  const source = await readFile("app/components/HeroSection.tsx", "utf8");
-  assert.match(source, /src="\/hero-background\.png"/);
-  assert.match(source, /src="\/AVARTAR_object\.png"/);
-  assert.match(source, /cinematic-portrait/);
-  assert.match(source, /blur-\[10px\]/);
-  assert.match(
-    source,
-    /const portraitX = useTransform\(scrollYProgress, \[0, 0\.42\], \[0, 160\]\);/,
-  );
+test("navbar consumes the cinematic visibility contract", async () => {
+  const source = await readFile("app/components/Navbar.tsx", "utf8");
+  assert.match(source, /shouldShowNavbar/);
+  assert.match(source, /data-cinematic-hero/);
+  assert.match(source, /cinematic-navbar/);
 });

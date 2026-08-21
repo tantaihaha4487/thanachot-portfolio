@@ -1,15 +1,21 @@
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
+import {
+  SITE_NAME,
+  SITE_TITLE,
+  SOCIAL_PREVIEW_BACKGROUND,
+} from "./lib/site-content";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
+export const alt = SITE_TITLE;
 
 export default async function Image() {
   const imageData = await readFile(
-    join(process.cwd(), "public", "hero-background.png"),
+    join(process.cwd(), "public", SOCIAL_PREVIEW_BACKGROUND.slice(1)),
   );
-  const imageSrc = `data:image/png;base64,${imageData.toString("base64")}`;
+  const imageSrc = `data:image/jpeg;base64,${imageData.toString("base64")}`;
 
   return new ImageResponse(
     (
@@ -70,14 +76,24 @@ export default async function Image() {
             Developer · Creator · Builder
           </div>
           <div style={{ display: "flex", fontSize: 72, fontWeight: 700, lineHeight: 1 }}>
-            Thanachot Phomthong
+            {SITE_NAME}
           </div>
           <div
             style={{
               display: "flex",
-              fontSize: 32,
+              fontSize: 30,
               marginTop: 20,
               color: "rgba(255,255,255,0.85)",
+            }}
+          >
+            Minecraft Mod &amp; Web Developer
+          </div>
+          <div
+            style={{
+              display: "flex",
+              fontSize: 22,
+              marginTop: 12,
+              color: "rgba(255,255,255,0.68)",
             }}
           >
             tantaihaha4487
